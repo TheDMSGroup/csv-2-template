@@ -9,7 +9,8 @@
   "funcscope"     : false,    // prohibits variable being used out of scope
   "globals"       : {
     "Promise"       : true,   // Prevents Promise being redeclared (bluebird)
-    "angular"       : true
+    "angular"       : true,
+    "Papa"          : true
   },
   "globalstrict"  : false,    // Prevents 'use strict' errors. 'use strict' will be required in our case
   "immed"         : false,    // Immediately invoked functions must be wrapped in parentheses (for readability)
@@ -60,5 +61,6 @@
   "withstmt"      : false,    // Don't use with
 
   "node"          : true,     // Node env
-  "mocha"         : true      // For tests
+  "mocha"         : true,
+  "browser"       : true
 }

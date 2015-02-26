@@ -1,0 +1,13 @@
+{
+  "name": "CSV 2 Template",
+  "version": "1.0.0",
+  "main": "index.html",
+  "window": {
+    "title": "CSV 2 Template",
+    "toolbar": false,
+    "width": 980,
+    "height": 760,
+    "min_width": 400,
+    "min_height": 400
+  }
+}

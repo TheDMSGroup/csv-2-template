@@ -6,17 +6,18 @@ var $      = require('../plugins');
 var lib    = require('../lib');
 var config = require('../config');
 
-var scripts     = path.join(config.src, '**', '*.js');
-var scriptsDest = path.join(config.dest, 'js');
+var scripts = path.join(config.src, '**', '*.js');
 
 module.exports = function () {
   return gulp.src(lib.ext('js').files.concat(scripts))
     .pipe($.sourcemaps.init())
       .pipe($.ngAnnotate())
       .pipe($.concat('app.min.js'))
-      .pipe($.uglify())
-    .pipe($.sourcemaps.write('../maps'))
-    .pipe(gulp.dest(scriptsDest));
+      .pipe($.uglify({
+        output: { 'ascii_only': true }
+      }))
+    .pipe($.sourcemaps.write('./maps'))
+    .pipe(gulp.dest(config.dest));
 };
 
 module.exports.watch = scripts;

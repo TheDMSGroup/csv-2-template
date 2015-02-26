@@ -9,13 +9,11 @@ gulp.task('default', ['watch']);
 gulp.task('build', [
   'static',
   'styles',
-  'scripts',
-  'fonts'
+  'scripts'
 ]);
 
 gulp.task('watch', [
   'static.watch',
   'styles.watch',
-  'scripts.watch',
-  'fonts'
+  'scripts.watch'
 ]);

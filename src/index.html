@@ -2,10 +2,107 @@
 <html>
   <head>
     <title></title>
-    <link href="css/app.min.css">
+    <link rel="stylesheet" href="app.min.css">
   </head>
   <body data-ng-app="mainApp">
-    <main data-ng-view></main>
-    <script src="js/app.min.js"></script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#/">CSV 2 Template</a>
+        </div>
+      </div>
+    </nav>
+    
+    <div class="main-window container-fluid" data-ng-controller="HomeController">
+      <div class="row" ng-hide="rows.data">
+        <div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-offset-3">
+          <div class="form-group">
+            <label for="csv-input">CSV File Input</label>
+            <input id="csv-input" class="form-control" type="file" data-csv="inputChange(file)">
+            <br>
+            <div class="alert alert-danger" data-ng-show="fileError" data-ng-bind="fileError"></div>
+            <p>
+              This needs to be a file with a .csv extension. If you are working with
+              an excel spreadsheet, choose the sheet you would like to use for this,
+              and go to "File > Save As..." and in the file type, select CSV.
+            </p>
+            <p>
+              A single header row must be at the top, but everything else should
+              removed so that the parser doesn't have to try to figure out how
+              to get your data.
+            </p>
+            <p>This means that the first row defines what each column means.</p>
+            <p>Example (the row with <strong>Title</strong> and <strong>URL</strong> is a header row):</p>
+            <div class="panel"><table class="table">
+              <thead><tr>
+                <th>Title</th>
+                <th>URL</th>
+              </tr></thead>
+              <tbody>
+                <tr>
+                  <td>The Blues</td>
+                  <td>http://theblues.com</td>
+                </tr>
+                <tr>
+                  <td>The Greens</td>
+                  <td>http://thegreens.com</td>
+                </tr>
+              </tbody>
+            </table></div>
+          </div>
+          
+          <div data-ng-show="file">
+            <button class="btn btn-primary btn-block" data-ng-click="parse(file)" data-ng-disabled="loading">
+              <span data-ng-show="loading">Parsing...</span>
+              <span data-ng-hide="loading">Begin Parsing</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div data-ng-show="rows">
+        <div class="row">
+          <div class="col-sm-6">
+            <h4>Fields</h4>
+            <p>
+              Just copy and paste the contents from the fields below and paste
+              them into the code area where you would like them to show up. You
+              may use any of the values more than once.
+            </p>
+            <p>
+              If the values below don't look like the ones you were expecting,
+              make sure that your csv file has the the header row as the first row
+              and the rest of the rows contain the data.
+            </p>
+          </div>
+        </div>
+        <hr>
+        <div data-csv-template="rows"></div>
+      </div>
+    </div>
+
+    <script src="app.min.js"></script>
+    <script type="text/ng-template" id="modules/csv-template/template.html">
+      <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <ul class="list-group" data-ng-show="fields">
+            <li class="list-group-item" data-ng-repeat="field in fields">
+              <input class="form-control" onclick="select()" readonly value="\{\{[{{field}}]\}\}">
+            </li>
+          </ul>
+          <div class="form-group">
+            <label for="file-name">Template File Name</label>
+            <div class="input-group">
+              <input id="file-name" type="text" class="form-control" data-ng-model="filename">
+              <span class="input-group-addon">.html</span>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" data-ng-click="generate()">Generate Template</button>
+        </div>
+        <div class="col-sm-6 col-md-8 col-lg-9">
+          <div data-ui-codemirror="{lineNumbers: true, theme: 'mdn-like', lineWrapping: false, mode: 'xml'}" data-ng-model="code"></div>
+        </div>
+      </div>
+    </script>
   </body>
 </html>
