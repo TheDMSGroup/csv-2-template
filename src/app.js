@@ -4,6 +4,7 @@ angular.module('mainApp', [
 ])
 .config(function () {'use strict';
   if (!window.require) { return; }
+  if (process.platform !== 'darwin') { return; }
   var gui = require('nw.gui');
   var mb = new gui.Menu({type:'menubar'});
   mb.createMacBuiltin('CSV 2 Template');
